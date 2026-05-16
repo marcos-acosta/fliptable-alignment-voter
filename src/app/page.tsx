@@ -10,6 +10,7 @@ import type {
   ServerToClientMessage,
   VoteMessage,
 } from "../../shared/types";
+import { PARTYKIT_HOST, ROOM_NAME } from "../../shared/constants";
 
 export default function Home() {
   const socketRef = useRef<PartySocket | null>(null);
@@ -17,8 +18,8 @@ export default function Home() {
 
   useEffect(() => {
     const partySocket = new PartySocket({
-      host: "localhost:1999",
-      room: "my-room",
+      host: PARTYKIT_HOST,
+      room: ROOM_NAME,
     });
     socketRef.current = partySocket;
 

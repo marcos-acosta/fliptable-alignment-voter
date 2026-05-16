@@ -8,6 +8,7 @@ import type {
   VoteSnapshot,
 } from "../../../shared/types";
 import AxisPad from "@/components/AxisPad";
+import { PARTYKIT_HOST, ROOM_NAME } from "../../../shared/constants";
 
 export default function AdminPage() {
   const socketRef = useRef<PartySocket | null>(null);
@@ -16,8 +17,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     const partySocket = new PartySocket({
-      host: "localhost:1999",
-      room: "my-room",
+      host: PARTYKIT_HOST,
+      room: ROOM_NAME,
     });
     socketRef.current = partySocket;
 
