@@ -9,6 +9,7 @@ import {
 } from "react";
 import styles from "./AxisPad.module.css";
 import type { Point } from "../../shared/types";
+import { classes } from "@/utils/throttle";
 
 interface AxisPadLabels {
   top?: string;
@@ -71,8 +72,12 @@ export default function AxisPad(props: AxisPadProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.top}>{props.labels?.top}</div>
-      <div className={styles.left}>{props.labels?.left}</div>
+      <div className={classes(styles.label, styles.top)}>
+        {props.labels?.top}
+      </div>
+      <div className={classes(styles.label, styles.left)}>
+        {props.labels?.left}
+      </div>
       <div
         ref={boxRef}
         className={styles.box}
@@ -88,8 +93,12 @@ export default function AxisPad(props: AxisPadProps) {
         ))}
         <div className={styles.point} style={toStyle(point)} />
       </div>
-      <div className={styles.right}>{props.labels?.right}</div>
-      <div className={styles.bottom}>{props.labels?.bottom}</div>
+      <div className={classes(styles.label, styles.right)}>
+        {props.labels?.right}
+      </div>
+      <div className={classes(styles.label, styles.bottom)}>
+        {props.labels?.bottom}
+      </div>
     </div>
   );
 }

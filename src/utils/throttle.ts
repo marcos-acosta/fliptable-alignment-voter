@@ -26,3 +26,5 @@ export function throttle<Args extends unknown[]>(
     }, intervalMs - elapsed);
   };
 }
+
+export const classes = (...classnames: (string | null | false)[]) => classnames.filter(Boolean).join(" ");

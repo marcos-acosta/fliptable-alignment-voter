@@ -1,3 +1,27 @@
 .page {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dbNameContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.dbName {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.gridContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

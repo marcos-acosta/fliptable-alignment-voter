@@ -44,17 +44,22 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <h1>{dbName || "(none)"}</h1>
-      <AxisPad
-        key={dbName}
-        labels={{
-          top: "good",
-          bottom: "evil",
-          left: "chaotic",
-          right: "lawful",
-        }}
-        onChange={sendCoordinates}
-      />
+      <div className={styles.dbNameContainer}>
+        <div className={styles.supertitle}>vote on:</div>
+        <div className={styles.dbName}>{dbName || "(none)"}</div>
+      </div>
+      <div className={styles.gridContainer}>
+        <AxisPad
+          key={dbName}
+          labels={{
+            top: "good",
+            bottom: "evil",
+            left: "chaotic",
+            right: "lawful",
+          }}
+          onChange={sendCoordinates}
+        />
+      </div>
     </div>
   );
 }
