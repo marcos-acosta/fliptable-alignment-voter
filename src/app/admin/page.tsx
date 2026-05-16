@@ -9,6 +9,7 @@ import type {
 } from "../../../shared/types";
 import AxisPad from "@/components/AxisPad";
 import { PARTYKIT_HOST, ROOM_NAME } from "../../../shared/constants";
+import styles from "./page.module.css";
 
 export default function AdminPage() {
   const socketRef = useRef<PartySocket | null>(null);
@@ -35,13 +36,19 @@ export default function AdminPage() {
   const newDatabase = () => {
     const msg: NewDbMessage = { type: "new-db", dbName };
     socketRef.current?.send(JSON.stringify(msg));
+    setDbName("");
   };
 
   return (
-    <div>
-      <h1>Admin page</h1>
-      <div>DB: {snapshot?.dbName || "(none)"}</div>
-      <div>Num voters: {snapshot?.votes.length ?? 0}</div>
+    <div className={styles.page}>
+      <div className={styles.dbNameContainer}>
+        <div className={styles.supertitle}>voting on:</div>
+        <div className={styles.dbName}>{snapshot?.dbName || "(none)"}</div>
+        <div className={styles.subtitle}>
+          {snapshot?.votes.length ?? 0} vote
+          {(snapshot?.votes.length ?? 0) === 1 ? "" : "s"}
+        </div>
+      </div>
       <AxisPad
         labels={{
           top: "good",
@@ -53,13 +60,17 @@ export default function AdminPage() {
         points={snapshot?.votes}
         readonly
       />
-      <div>
+      <div className={styles.newDbContainer}>
         <input
           type="text"
           value={dbName}
+          className={styles.dbNameInput}
           onChange={(e) => setDbName(e.target.value)}
+          placeholder="database name"
         />
-        <button onClick={newDatabase}>New DB</button>
+        <button onClick={newDatabase} className={styles.newDbButton}>
+          next
+        </button>
       </div>
     </div>
   );

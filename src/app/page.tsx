@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <div className={styles.dbNameContainer}>
-        <div className={styles.supertitle}>vote on:</div>
+        <div className={styles.supertitle}>voting on:</div>
         <div className={styles.dbName}>{dbName || "(none)"}</div>
       </div>
       <div className={styles.gridContainer}>

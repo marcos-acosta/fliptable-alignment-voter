@@ -10,13 +10,26 @@
   align-items: center;
   justify-items: center;
   width: 90%;
-  max-width: 600px;
+  max-width: 800px;
+
+  --label-font-size: 16px;
+  --point-size: 12px;
+  --small-point-size: 6px;
 }
 
 .label {
-  font-size: 16px;
+  font-size: var(--label-font-size);
   text-transform: uppercase;
   font-style: italic;
+}
+
+@media (width > 800px) {
+  .container {
+    --label-font-size: 30px;
+    --point-size: 20px;
+    --small-point-size: 8px;
+    gap: 30px;
+  }
 }
 
 .top {
@@ -74,13 +87,13 @@
 }
 
 .point {
-  width: 12px;
-  height: 12px;
+  width: var(--point-size);
+  height: var(--point-size);
   background: black;
 }
 
 .smallPoint {
-  width: 6px;
-  height: 6px;
+  width: var(--small-point-size);
+  height: var(--small-point-size);
   background: #888;
 }
