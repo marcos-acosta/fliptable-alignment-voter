@@ -21,9 +21,16 @@
     font-weight: bold;
 }
 
-.newDbContainer {
+.actionsContainer {
     margin-top: 50px;
     font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min-content;
+}
+
+.newDbContainer {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -36,7 +43,7 @@
     border: 1px solid black;
 }
 
-.newDbButton {
+.button {
     font-family: inherit;
     font-size: inherit;
     padding: 3px 5px;
@@ -44,4 +51,9 @@
     background-color: black;
     color: white;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.fullWidth {
+    width: 100%;
 }

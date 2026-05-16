@@ -10,11 +10,13 @@ import type {
 import AxisPad from "@/components/AxisPad";
 import { PARTYKIT_HOST, ROOM_NAME } from "../../../shared/constants";
 import styles from "./page.module.css";
+import { classes } from "@/utils/throttle";
 
 export default function AdminPage() {
   const socketRef = useRef<PartySocket | null>(null);
   const [snapshot, setSnapshot] = useState<VoteSnapshot | null>(null);
   const [dbName, setDbName] = useState("");
+  const [copyText, setCopyText] = useState("copy alignment");
 
   useEffect(() => {
     const partySocket = new PartySocket({
@@ -39,6 +41,13 @@ export default function AdminPage() {
     setDbName("");
   };
 
+  const copyAlignmentToClipboard = async () => {
+    const consensusString = `${snapshot?.consensus.x.toFixed(2)},${snapshot?.consensus.y.toFixed(2)}`;
+    await navigator.clipboard.writeText(consensusString);
+    setCopyText("copied!");
+    setTimeout(() => setCopyText("copy alignment"), 500);
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.dbNameContainer}>
@@ -60,17 +69,27 @@ export default function AdminPage() {
         points={snapshot?.votes}
         readonly
       />
-      <div className={styles.newDbContainer}>
-        <input
-          type="text"
-          value={dbName}
-          className={styles.dbNameInput}
-          onChange={(e) => setDbName(e.target.value)}
-          placeholder="database name"
-        />
-        <button onClick={newDatabase} className={styles.newDbButton}>
-          next
-        </button>
+      <div className={styles.actionsContainer}>
+        <div className={styles.copyAlignmentContainer}>
+          <button
+            onClick={copyAlignmentToClipboard}
+            className={classes(styles.button, styles.fullWidth)}
+          >
+            {copyText}
+          </button>
+        </div>
+        <div className={styles.newDbContainer}>
+          <input
+            type="text"
+            value={dbName}
+            className={styles.dbNameInput}
+            onChange={(e) => setDbName(e.target.value)}
+            placeholder="database name"
+          />
+          <button onClick={newDatabase} className={styles.button}>
+            next
+          </button>
+        </div>
       </div>
     </div>
   );
