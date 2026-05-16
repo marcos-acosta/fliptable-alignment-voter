@@ -53,14 +53,24 @@
   background: #ccc;
 }
 
-.point {
+.point,
+.smallPoint {
   position: absolute;
   left: calc((var(--x) + 1) * 50%);
   top: calc((1 - var(--y)) * 50%);
-  width: 12px;
-  height: 12px;
   border-radius: 50%;
-  background: #333;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+.point {
+  width: 12px;
+  height: 12px;
+  background: #333;
+}
+
+.smallPoint {
+  width: 6px;
+  height: 6px;
+  background: #888;
 }

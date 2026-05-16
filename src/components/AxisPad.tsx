@@ -21,13 +21,17 @@ interface AxisPadProps {
   labels?: AxisPadLabels;
   onChange?: (point: Point) => void;
   point?: Point;
+  points?: Point[];
   readonly?: boolean;
 }
+
+const toStyle = (p: Point): CSSProperties =>
+  ({ "--x": p.x, "--y": p.y }) as CSSProperties;
 
 export default function AxisPad(props: AxisPadProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef(false);
-  const [internalPoint, setInternalPoint] = useState({ x: 0, y: 0 });
+  const [internalPoint, setInternalPoint] = useState<Point>({ x: 0, y: 0 });
   const point = props.point ?? internalPoint;
 
   const updateFromEvent = useCallback(
@@ -48,31 +52,22 @@ export default function AxisPad(props: AxisPadProps) {
   );
 
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if (props.readonly) return;
     draggingRef.current = true;
     e.currentTarget.setPointerCapture(e.pointerId);
     updateFromEvent(e);
   };
 
   const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return;
+    if (props.readonly || !draggingRef.current) return;
     updateFromEvent(e);
   };
 
   const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    if (props.readonly) return;
     draggingRef.current = false;
     e.currentTarget.releasePointerCapture(e.pointerId);
   };
-
-  const handlePointerEvent = (
-    e: PointerEvent<HTMLDivElement>,
-    callback: (e: PointerEvent<HTMLDivElement>) => void,
-  ) => {
-    if (!props.readonly) {
-      callback(e);
-    }
-  };
-
-  const pointStyle = { "--x": point.x, "--y": point.y } as CSSProperties;
 
   return (
     <div className={styles.container}>
@@ -81,14 +76,17 @@ export default function AxisPad(props: AxisPadProps) {
       <div
         ref={boxRef}
         className={styles.box}
-        onPointerDown={(e) => handlePointerEvent(e, handlePointerDown)}
-        onPointerMove={(e) => handlePointerEvent(e, handlePointerMove)}
-        onPointerUp={(e) => handlePointerEvent(e, handlePointerUp)}
-        onPointerCancel={(e) => handlePointerEvent(e, handlePointerUp)}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
       >
         <div className={styles.axisX} />
         <div className={styles.axisY} />
-        <div className={styles.point} style={pointStyle} />
+        {props.points?.map((p, i) => (
+          <div key={i} className={styles.smallPoint} style={toStyle(p)} />
+        ))}
+        <div className={styles.point} style={toStyle(point)} />
       </div>
       <div className={styles.right}>{props.labels?.right}</div>
       <div className={styles.bottom}>{props.labels?.bottom}</div>

@@ -9,17 +9,17 @@ export type VoteMessage = {
 };
 
 export type NewDbMessage = {
-  type: "new-db",
+  type: "new-db";
   dbName: string;
-}
+};
 
 export type ClientToServerMessage = VoteMessage | NewDbMessage;
 
-
-export type ConsensusMessage = {
-  type: "consensus";
+export type VoteSnapshot = {
+  type: "snapshot";
+  dbName: string;
+  votes: Point[];
   consensus: Point;
-  numVoters: number;
 };
 
-export type ServerToClientMessage = NewDbMessage | ConsensusMessage;
+export type ServerToClientMessage = VoteSnapshot;

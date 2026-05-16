@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import PartySocket from "partysocket";
 import AxisPad from "../components/AxisPad";
 import { throttle } from "../utils/throttle";
@@ -13,6 +13,7 @@ import type {
 
 export default function Home() {
   const socketRef = useRef<PartySocket | null>(null);
+  const [dbName, setDbName] = useState("");
 
   useEffect(() => {
     const partySocket = new PartySocket({
@@ -23,7 +24,9 @@ export default function Home() {
 
     partySocket.addEventListener("message", (e) => {
       const msg: ServerToClientMessage = JSON.parse(e.data);
-      console.log(msg);
+      if (msg.type === "snapshot") {
+        setDbName(msg.dbName);
+      }
     });
 
     return () => partySocket.close();
@@ -40,7 +43,9 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
+      <h1>{dbName || "(none)"}</h1>
       <AxisPad
+        key={dbName}
         labels={{
           top: "good",
           bottom: "evil",
