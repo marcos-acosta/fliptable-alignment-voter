@@ -18,6 +18,16 @@
   font-weight: bold;
 }
 
+@media (width > 800px) {
+  .dbNameContainer {
+    font-size: 30px;
+  }
+
+  .dbName {
+    font-size: 50px;
+  }
+}
+
 .gridContainer {
   width: 100%;
   display: flex;
