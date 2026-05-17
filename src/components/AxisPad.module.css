@@ -15,19 +15,22 @@
   --label-font-size: 16px;
   --point-size: 12px;
   --small-point-size: 6px;
+  --thickness-multiplier: 1;
 }
 
 .label {
   font-size: var(--label-font-size);
   text-transform: uppercase;
   font-style: italic;
+  background-color: white;
 }
 
 @media (width > 800px) {
   .container {
     --label-font-size: 30px;
-    --point-size: 20px;
-    --small-point-size: 8px;
+    --point-size: 30px;
+    --small-point-size: 10px;
+    --thickness-multiplier: 4;
     gap: 30px;
   }
 }
@@ -53,9 +56,10 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  border: 1px solid black;
+  border: calc(1px * var(--thickness-multiplier)) solid black;
   touch-action: none;
   cursor: crosshair;
+  background-color: white;
 }
 
 .axisX {
@@ -63,7 +67,7 @@
   left: 0;
   right: 0;
   top: 50%;
-  height: 1px;
+  height: calc(1px * var(--thickness-multiplier));
   background: #ccc;
 }
 
@@ -72,7 +76,7 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 1px;
+  width: calc(1px * var(--thickness-multiplier));
   background: #ccc;
 }
 
