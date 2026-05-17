@@ -8,7 +8,11 @@ import type {
   VoteSnapshot,
 } from "../../../shared/types";
 import AxisPad from "@/components/AxisPad";
-import { PARTYKIT_HOST, ROOM_NAME } from "../../../shared/constants";
+import {
+  AXIS_LABELS,
+  PARTYKIT_HOST,
+  ROOM_NAME,
+} from "../../../shared/constants";
 import styles from "./page.module.css";
 import { classes } from "@/utils/throttle";
 
@@ -59,12 +63,7 @@ export default function AdminPage() {
         </div>
       </div>
       <AxisPad
-        labels={{
-          top: "good",
-          bottom: "evil",
-          left: "chaotic",
-          right: "lawful",
-        }}
+        labels={AXIS_LABELS}
         point={snapshot?.consensus}
         points={snapshot?.votes}
         readonly

@@ -10,7 +10,7 @@ import type {
   ServerToClientMessage,
   VoteMessage,
 } from "../../shared/types";
-import { PARTYKIT_HOST, ROOM_NAME } from "../../shared/constants";
+import { AXIS_LABELS, PARTYKIT_HOST, ROOM_NAME } from "../../shared/constants";
 
 export default function Home() {
   const socketRef = useRef<PartySocket | null>(null);
@@ -49,16 +49,7 @@ export default function Home() {
         <div className={styles.dbName}>{dbName || "(none)"}</div>
       </div>
       <div className={styles.gridContainer}>
-        <AxisPad
-          key={dbName}
-          labels={{
-            top: "good",
-            bottom: "evil",
-            left: "chaotic",
-            right: "lawful",
-          }}
-          onChange={sendCoordinates}
-        />
+        <AxisPad key={dbName} labels={AXIS_LABELS} onChange={sendCoordinates} />
       </div>
     </div>
   );
